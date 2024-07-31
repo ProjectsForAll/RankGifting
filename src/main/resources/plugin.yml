@@ -1,4 +1,12 @@
 name: '${name}'
 version: '${version}'
 main: '${main}'
+authors: [ Drak ]
+depend:
+  - BukkitOfUtils
 folia-supported: true
+
+commands:
+  gift:
+    description: 'Gift a player something.'
+    permission: 'rankgifting.command.gift'

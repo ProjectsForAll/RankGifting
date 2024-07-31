@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'com.github.johnrengelman.shadow' version '7.1.2' // for shadowing
+    id "io.freefair.lombok" version "8.6"
 }
 
 apply from: rootDir.toString() + '/dependencies.gradle'
@@ -19,10 +20,16 @@ ext {
 
 repositories {
     mavenCentral()
+    mavenLocal()
     maven {
-        name = "spigotmc-repo"
-        url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+        content {
+            includeGroup 'org.bukkit'
+            includeGroup 'org.spigotmc'
+        }
     }
+    maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
+    maven { url = 'https://oss.sonatype.org/content/repositories/central' }
     maven {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
@@ -34,6 +41,7 @@ repositories {
     }
     maven { url 'https://repo.papermc.io/repository/maven-snapshots/' }
     maven { url 'https://repo.papermc.io/repository/maven-public/' }
+    maven { url 'https://repo.xenondevs.xyz/releases' }
 }
 
 disableAutoTargetJvm()
@@ -45,8 +53,6 @@ dependencies {
     implementation(IMPL)
     compileOnly(COMP_ONLY)
     shadow(SHADOW)
-
-    implementation(annotationProcessor(shadow("com.github.Streamline-Essentials:BukkitOfUtils:-SNAPSHOT")))
 
     // Other Plugins
     compileOnly(OTHER_PLUGINS)
